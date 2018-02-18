@@ -1,0 +1,48 @@
+buildscript {
+  ext {
+    springBootVersion = '1.5.3.RELEASE'
+  }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+  baseName = 'sparkml'
+  version = '1.0-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile('org.springframework.boot:spring-boot-starter')
+  compile('org.springframework.boot:spring-boot-starter-web')
+  
+  compile("org.scala-lang:scala-library:2.11.11")
+  compile("com.typesafe.scala-logging:scala-logging-slf4j_2.11:2.1.2")
+  compile("com.fasterxml.jackson.module:jackson-module-scala_2.11:2.8.8")
+
+  compile("org.codehaus.janino:commons-compiler:2.7.8")
+
+  compile('org.apache.spark:spark-mllib_2.11:2.1.1')
+  compile('org.apache.spark:spark-sql_2.11:2.1.1')
+  testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+bootRun {
+  jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9009'
+}
+
